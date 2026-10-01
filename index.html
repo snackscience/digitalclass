@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오늘의 배움 한 장 · SchoolKit</title>
+<meta name="description" content="AI 디지털 시대, 교육의 본질을 찾아서 — 연수 후 인상 깊은 내용과 수업 적용 아이디어를 정리하고 AI 피드백을 받아 이미지로 저장합니다.">
+<meta property="og:title" content="오늘의 배움 한 장 · AI 디지털 시대, 교육의 본질을 찾아서">
+<meta property="og:description" content="인상 깊은 내용 · 수업 적용 아이디어 · AI 피드백 · 이미지 저장">
+<meta name="theme-color" content="#1d3a8f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --navy-0:#14296b; --navy-1:#1d3a8f; --navy-2:#2c56b8;
+  --blue:#2a4fae; --blue-2:#3d68c9; --blue-d:#1d3a8f; --sky:#c9d8f5; --cyan:#c8a660; --gold:#c8a660; --gold-l:#efe2c2;
+  --blue-50:#f1f4fb; --blue-100:#dde4f3; --blue-200:#b9c7e6;
+  --ink:#172238; --ink-2:#4a5469; --ink-3:#8a92a3; --line:#e6e3dc; --bg:#f7f5f0; --card:#fff;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* HERO */
+.hero{background:radial-gradient(70% 90% at 100% 0%,rgba(200,166,96,.22) 0%,rgba(200,166,96,0) 60%),linear-gradient(135deg,#1a347f 0%,#24489f 50%,#3363bf 100%);color:#fff;padding:38px 0 88px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(180deg,#000 0%,transparent 90%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 90%)}
+.hero .wrap{position:relative}
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(200,166,96,.7);color:var(--gold-l);font-weight:700;font-size:12.5px;padding:5px 12px 5px 10px;border-radius:999px;letter-spacing:.04em;backdrop-filter:blur(4px)}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block;box-shadow:0 0 0 3px rgba(200,166,96,.22)}
+.hero h1{font-family:"Noto Serif KR",serif;font-size:clamp(28px,6.4vw,38px);font-weight:700;line-height:1.22;margin:16px 0 10px;letter-spacing:-.03em}
+.hero p{font-size:15px;color:rgba(255,255,255,.92)}
+.hero .by{margin-top:14px;font-size:12.5px;color:rgba(255,255,255,.8);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.hero .by::before{content:"";width:22px;height:1px;background:var(--gold)}
+
+/* STEP BAR */
+.stepcard{background:#fff;border-radius:var(--radius);box-shadow:0 18px 40px -22px rgba(20,41,107,.4),0 1px 0 rgba(7,18,43,.04);margin-top:-58px;position:relative;z-index:2;padding:16px 12px 14px;border:1px solid rgba(15,27,51,.05)}
+.steps{display:flex;gap:6px;justify-content:space-between}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;border:none;background:none;cursor:pointer;padding:2px 0;min-width:0}
+.step .n{width:30px;height:30px;border-radius:999px;display:grid;place-items:center;font-weight:700;font-size:13.5px;background:#f0f3f8;color:var(--ink-3);border:1px solid var(--line);transition:.2s}
+.step .t{font-size:12px;color:var(--ink-3);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.step.done .n{background:var(--blue-50);color:var(--blue);border-color:var(--blue-200)}
+.step.cur .n{background:var(--navy-1);color:#fff;border-color:var(--navy-1);box-shadow:0 0 0 4px rgba(200,166,96,.25)}
+.step.cur .t{color:var(--ink)}
+.step.last .n{border-style:dashed}
+.step.last.cur .n{background:var(--blue);border-color:var(--blue);border-style:solid}
+.progress{height:3px;background:#edf1f7;border-radius:3px;margin:12px 4px 0;overflow:hidden}
+.progress b{display:block;height:100%;background:linear-gradient(90deg,var(--navy-1),var(--blue-2) 70%,var(--gold));width:0;transition:width .35s}
+
+/* PANELS */
+main{padding:22px 0 30px}
+.panel{display:none;animation:in .3s ease}
+.panel.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:var(--radius);padding:24px 20px;border:1px solid var(--line);margin-bottom:14px;box-shadow:0 1px 2px rgba(15,27,51,.03)}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+h2{font-family:"Noto Serif KR",serif;font-size:22px;font-weight:700;letter-spacing:-.025em;margin:6px 0 6px;line-height:1.35}
+.sub{color:var(--ink-2);font-size:14.5px}
+label.f{display:block;font-weight:700;font-size:14px;margin:18px 0 7px}
+.inp,textarea{width:100%;border:1px solid #d6deea;border-radius:12px;padding:13px 14px;font-size:16px;background:#fbfcfe;transition:.15s;outline:none}
+.inp::placeholder,textarea::placeholder{color:#a3afc2}
+.inp:focus,textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+textarea{resize:vertical;min-height:110px;line-height:1.65}
+
+/* TOPIC PICKER */
+.topics{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px}
+.topic{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;cursor:pointer;transition:.15s}
+.topic:hover{border-color:var(--blue-200);background:#fcfdff}
+.topic .num{flex:none;font-size:10.5px;font-weight:800;color:var(--navy-2);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:7px;padding:3px 7px;margin-top:2px;letter-spacing:.06em}
+.topic .tt{font-weight:700;font-size:15px;line-height:1.35}
+.topic .ds{font-size:13px;color:var(--ink-3);margin-top:2px;line-height:1.45}
+.topic.sel{border-color:var(--blue);background:var(--blue-50);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.topic.sel .num{background:var(--blue);border-color:var(--blue);color:#fff}
+.topic .mark{margin-left:auto;flex:none;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;align-self:center;display:none;place-items:center}
+.topic.sel .mark{display:grid}
+.reason{margin-top:12px}
+.reason textarea{min-height:70px}
+
+/* IDEA helpers */
+.count{font-size:12px;color:var(--ink-3);text-align:right;margin-top:4px}
+.tip{background:#fbf8f1;border:1px solid var(--gold-l);border-radius:14px;padding:15px 16px;font-size:14px;color:var(--ink);margin-top:14px;line-height:1.6}
+.tip b{display:block;margin-bottom:4px;font-size:11.5px;letter-spacing:.14em;color:#a8843d;font-weight:700}
+.ex-head{margin:24px 0 12px}
+.ex-title{font-weight:800;font-size:17px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ex-title span{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--navy-1);border-radius:6px;padding:3px 7px}
+.ex-help{font-size:13px;color:var(--ink-3);margin-top:4px}
+.ex-list{display:grid;gap:8px}
+.ex{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}
+.ex:hover{border-color:var(--blue-200)}
+.ex .rd{flex:none;width:20px;height:20px;border-radius:6px;border:1.5px solid #c3cddd;margin-top:2px;display:grid;place-items:center;font-size:11px;color:transparent;transition:.15s}
+.ex .lb{font-size:11.5px;font-weight:700;color:var(--blue);letter-spacing:.02em}
+.ex .tx{font-size:14.5px;font-weight:600;line-height:1.55;color:var(--ink);margin-top:3px}
+.ex.on{border-color:var(--blue);background:var(--blue-50)}
+.ex.on .rd{border-color:var(--blue);background:var(--blue);color:#fff}
+
+/* NAV */
+.nav{display:flex;gap:10px;margin-top:6px}
+.btn{flex:1;border:none;border-radius:14px;padding:15px 18px;font-weight:700;font-size:16px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-.01em}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.pri{background:linear-gradient(135deg,var(--navy-1),var(--navy-2));color:#fff;box-shadow:0 10px 22px -12px rgba(29,58,143,.7)}
+.btn.pri:not(:disabled):hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink-2);flex:0 0 auto}
+.btn.mint{background:linear-gradient(135deg,var(--navy-1),var(--navy-2));border:1px solid var(--gold);color:#fff;box-shadow:0 10px 22px -12px rgba(37,99,235,.7)}
+.btn.vio{background:var(--navy-1);color:#fff}
+.err{color:#d23f4a;font-size:13.5px;margin-top:8px;min-height:1px;font-weight:600}
+
+/* FEEDBACK */
+.fb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mode{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--blue-50);color:var(--blue-d);border:1px solid var(--blue-100)}
+.loading{display:flex;align-items:center;gap:10px;color:var(--ink-2);font-size:14.5px;padding:22px 0}
+.dots{display:flex;gap:4px}.dots i{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:b 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.lens{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:16px 0 4px}
+.lens div{display:flex;align-items:center;gap:8px;font-size:13px;padding:9px 10px;border-radius:10px;background:#f4f6fa;color:var(--ink-3);font-weight:600;border:1px solid transparent}
+.lens div.ok{background:var(--blue-50);color:var(--navy-2);border-color:var(--blue-100)}
+.lens div span{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:#d7deea;color:#fff}
+.lens div.ok span{background:var(--blue)}
+.fb-sec{margin-top:18px}
+.fb-sec h4{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.fb-sec h4 em{font-style:normal;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:12px}
+.fb-sec ul{list-style:none;display:grid;gap:7px}
+.fb-sec li{font-size:14.5px;padding-left:14px;position:relative;color:var(--ink-2)}
+.fb-sec li::before{content:"";position:absolute;left:2px;top:.7em;width:5px;height:5px;border-radius:50%;background:var(--blue-2);opacity:.6}
+.s1 h4 em{background:var(--blue-50);color:var(--blue)}
+.s2 h4 em{background:#eef1f6;color:var(--navy-2)}
+.s3 h4 em{background:#fbf3e1;color:#a8843d}
+.withai{font-family:"Noto Serif KR",Georgia,serif;font-style:italic;font-weight:600;font-size:12px;letter-spacing:.04em;color:#a8843d;border:1px solid var(--gold-l);background:#fbf8f1;border-radius:999px;padding:1px 9px;margin-left:4px;text-transform:none}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.privacy{display:flex;gap:10px;align-items:flex-start;margin-top:18px;background:#fbf8f1;border:1px solid var(--gold-l);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.6;color:var(--ink-2)}
+.privacy b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:2px}
+.privacy .ic{flex:none;font-size:15px;line-height:1.4}
+.cheer{font-size:15px;line-height:1.75;color:var(--ink);background:#fbf8f1;border:1px solid var(--gold-l);border-radius:14px;padding:16px 18px;position:relative}
+.fb-sec h4 em.e1{background:#fbf3e1}
+.fb-sec h4 em.e2{background:var(--blue-50)}
+.idea-list{display:grid;gap:8px}
+.idea-it{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.idea-it .no{flex:none;width:24px;height:24px;border-radius:50%;background:var(--navy-1);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
+.idea-it .lb{font-size:11.5px;font-weight:700;color:var(--blue);letter-spacing:.02em}
+.idea-it .tx{font-size:14.5px;font-weight:600;line-height:1.55;margin-top:3px}
+.sh-ideas{margin-top:8px}
+.sh-ul{margin:4px 0 0 18px;display:grid;gap:3px}
+.quote{font-family:"Noto Serif KR",serif;margin-top:18px;border-left:3px solid var(--gold);background:var(--blue-50);padding:13px 15px;border-radius:0 12px 12px 0;font-size:14.5px;font-weight:600;color:var(--navy-1)}
+
+/* RESULT CARD (captured as image) */
+#sheet{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 18px 40px -26px rgba(7,18,43,.4)}
+.sh-top{background:radial-gradient(70% 90% at 100% 0%,rgba(200,166,96,.22) 0%,rgba(200,166,96,0) 60%),linear-gradient(135deg,#1a347f 0%,#24489f 50%,#3363bf 100%);color:#fff;padding:24px 22px 22px}
+.sh-top .badge{font-size:11.5px;padding:4px 10px}
+.sh-top h3{font-family:"Noto Serif KR",serif;font-size:21px;font-weight:700;margin-top:12px;line-height:1.3;letter-spacing:-.025em}
+.sh-top .who{margin-top:10px;font-size:14px;color:rgba(255,255,255,.95);font-weight:600}
+.sh-body{padding:20px 20px 20px;display:grid;gap:16px}
+.sh-block .lb{font-size:11.5px;font-weight:800;letter-spacing:.08em;margin-bottom:7px;color:var(--ink-3)}
+.sh-block.g .lb,.sh-block.v .lb,.sh-block.c .lb{color:var(--blue)}
+.pill-row{display:grid;gap:6px}
+.pill{border-radius:12px;padding:10px 13px;font-size:14.5px;font-weight:700;line-height:1.4}
+.pill small{display:block;font-weight:500;color:var(--ink-2);font-size:13px;margin-top:3px}
+.g .pill{background:var(--blue-50);border:1px solid var(--blue-100)}
+.v .pill{background:linear-gradient(135deg,var(--navy-1),var(--navy-2));color:#fff;border:1px solid rgba(200,166,96,.5)}
+.v .pill .no{color:var(--gold-l);opacity:1}
+.pill .no{font-size:10.5px;font-weight:800;margin-right:7px;opacity:.65;letter-spacing:.06em}
+.idea-box{background:#fafbfd;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:14px;white-space:pre-wrap;color:var(--ink);line-height:1.65}
+.fb-mini{background:#fbfaf6;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+.fb-mini b{color:var(--navy-1)}
+.fb-mini p+p{margin-top:6px}
+.sh-foot{display:flex;justify-content:space-between;align-items:center;padding:13px 20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-3);background:#fbfaf6}
+.sh-foot b{color:var(--navy-1)}
+
+.actions{display:grid;gap:10px;margin-top:16px}
+.status{font-size:13.5px;text-align:center;color:var(--ink-2);min-height:20px;margin-top:6px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(20,30,60,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.on{display:flex}
+.modal .box{background:#fff;border-radius:18px;max-width:520px;width:100%;max-height:92vh;overflow:auto;padding:16px}
+.modal img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+.modal p{font-size:14px;color:var(--ink-2);text-align:center;margin:10px 0}
+
+footer{padding:28px 0 42px;text-align:center;font-size:12.5px;color:var(--ink-3);line-height:1.8}
+footer strong{color:var(--navy-1)}
+footer a{color:var(--blue);text-decoration:none}
+
+@media (min-width:640px){
+  .topics{grid-template-columns:1fr 1fr}
+  .card{padding:30px}
+  .actions{grid-template-columns:1fr 1fr}
+}
+@media (max-width:380px){ .step .t{font-size:10.5px} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge"><i></i>SchoolKit</span>
+    <h1>오늘의 배움 한 장</h1>
+    <p>AI 디지털 시대, 교육의 본질을 찾아서<br>오늘 배운 것을 정리하고 내 수업으로 가져가 보세요.</p>
+    <div class="by">율정중학교 수석교사 진연자</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="stepcard" aria-label="진행 단계">
+    <div class="steps" id="steps"></div>
+    <div class="progress"><b id="bar"></b></div>
+  </nav>
+
+  <main>
+    <!-- STEP 1 -->
+    <section class="panel on" data-step="0">
+      <div class="card">
+        <div class="kicker">Step 1</div>
+        <h2>선생님을 소개해 주세요</h2>
+        <p class="sub">입력한 정보는 저장 이미지에 함께 표시됩니다.</p>
+        <label class="f" for="school">학교명</label>
+        <input class="inp" id="school" placeholder="예) 율정중학교" autocomplete="organization">
+        <label class="f" for="name">이름</label>
+        <input class="inp" id="name" placeholder="예) 홍길동" autocomplete="name">
+        <div class="row2">
+          <div><label class="f" for="grade">담당 학년</label><input class="inp" id="grade" placeholder="예) 중1, 3학년"></div>
+          <div><label class="f" for="subject">과목</label><input class="inp" id="subject" placeholder="예) 과학"></div>
+        </div>
+        <div class="err" id="err0"></div>
+        <div class="privacy" id="privacy">
+          <span class="ic">🔒</span>
+          <div><b>입력한 내용은 어디에도 전송·저장되지 않아요.</b>
+          작성 중인 내용은 지금 쓰는 기기에만 임시로 남고, 마지막에 저장하는 이미지도 내 휴대폰·PC에만 저장됩니다. 저장한 이미지를 안내에 따라 제출해 주세요.</div>
+        </div>
+      </div>
+      <div class="nav"><button class="btn pri" data-next>다음</button></div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="panel" data-step="1">
+      <div class="card">
+        <div class="kicker">Step 2</div>
+        <h2>가장 인상 깊은 내용은?</h2>
+        <p class="sub">오늘 연수 8개 TOPIC 중 마음에 가장 남은 한 가지를 골라 주세요.</p>
+        <div class="topics" id="topicsA"></div>
+        <div class="reason">
+          <label class="f" for="whyA">왜 인상 깊었나요? <span style="font-weight:500;color:var(--ink-3)">(선택)</span></label>
+          <textarea id="whyA" placeholder="예) 'AI는 조력자, 수업의 주도권은 교사와 학생에게 있다'는 말이 우리 반 상황과 겹쳐 보였어요."></textarea>
+        </div>
+        <div class="err" id="err1"></div>
+      </div>
+      <div class="nav"><button class="btn ghost" data-prev>이전</button><button class="btn pri" data-next>다음</button></div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="panel" data-step="2">
+      <div class="card">
+        <div class="kicker">Step 3</div>
+        <h2>수업에 적용해 보고 싶은 내용은?</h2>
+        <p class="sub">당장 내 교실에서 시도해 보고 싶은 한 가지를 골라 주세요.</p>
+        <div class="topics" id="topicsB"></div>
+        <div class="err" id="err2"></div>
+      </div>
+      <div class="nav"><button class="btn ghost" data-prev>이전</button><button class="btn pri" data-next>다음</button></div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="panel" data-step="3">
+      <div class="card">
+        <div class="kicker">Step 4</div>
+        <h2>수업 적용 아이디어</h2>
+        <p class="sub" id="ideaSub">선택한 내용을 어떤 수업에서, 어떻게 적용할지 구체적으로 적어 주세요.</p>
+        <label class="f" for="target">적용할 단원 · 주제 <span style="font-weight:500;color:var(--ink-3)">(선택)</span></label>
+        <input class="inp" id="target" placeholder="예) 역학적 에너지 보존">
+        <div class="ex-head">
+          <div class="ex-title" id="exTitle"></div>
+          <div class="ex-help">마음에 드는 수업 장면을 고르면 아래 아이디어 칸에 들어가요. 여러 개를 골라 이어 쓰고, ○○ 부분은 내 수업에 맞게 고쳐 주세요.</div>
+        </div>
+        <div class="ex-list" id="exList"></div>
+        <label class="f" for="idea">아이디어</label>
+        <textarea id="idea" style="min-height:170px" placeholder="위 예시를 골라 시작하거나 직접 작성해 주세요. ○○ 부분은 내 수업에 맞게 바꿔 주세요."></textarea>
+        <div class="count"><span id="cnt">0</span>자</div>
+        <div class="tip" id="keyTip"></div>
+        <div class="err" id="err3"></div>
+      </div>
+      <div class="nav"><button class="btn ghost" data-prev>이전</button><button class="btn pri" data-next>AI 피드백 받기</button></div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="panel" data-step="4">
+      <div class="card" id="fbCard">
+        <div class="fb-head">
+          <div><div class="kicker">Step 5</div><h2 style="margin-bottom:0">AI 피드백</h2></div>
+          <span class="mode" id="mode">분석 중</span>
+        </div>
+        <div id="fbBody"></div>
+      </div>
+
+      <div id="sheet" aria-label="저장될 성찰 카드">
+        <div class="sh-top">
+          <span class="badge"><span style="color:var(--cyan)">●</span>SchoolKit · 오늘의 배움 한 장</span>
+          <h3>AI 디지털 시대,<br>교육의 본질을 찾아서</h3>
+          <div class="who" id="shWho"></div>
+        </div>
+        <div class="sh-body">
+          <div class="sh-block g"><div class="lb">가장 인상 깊은 내용</div><div class="pill-row" id="shA"></div></div>
+          <div class="sh-block v"><div class="lb">수업에 적용해 보고 싶은 내용</div><div class="pill-row" id="shB"></div></div>
+          <div class="sh-block"><div class="lb">수업 적용 아이디어 <span id="shTarget" style="font-weight:600;color:var(--ink-3);letter-spacing:0"></span></div><div class="idea-box" id="shIdea"></div></div>
+          <div class="sh-block c"><div class="lb">응원 한마디 <span class="withai">with AI</span></div><div class="fb-mini" id="shFb"></div></div>
+        </div>
+        <div class="sh-foot"><span><b>SchoolKit</b> · 학교에서 바로 쓰는 수업 도구</span><span id="shDate"></span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn mint" id="saveBtn">📥 이미지 저장</button>
+        <button class="btn vio" id="submitBtn">📤 이미지 저장 & 제출</button>
+      </div>
+      <div class="status" id="status"></div>
+      <div class="nav" style="margin-top:14px">
+        <button class="btn ghost" data-prev>아이디어 수정</button>
+        <button class="btn ghost" id="resetBtn" style="flex:1">처음부터 새로 작성</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="box">
+    <img id="modalImg" alt="성찰 카드 이미지">
+    <p>이미지를 <b>길게 눌러</b> 사진에 저장하거나, 아래 버튼으로 내려받으세요.</p>
+    <div class="nav"><button class="btn ghost" id="closeModal">닫기</button><a class="btn pri" id="dlLink" download="오늘의배움한장.png" style="text-decoration:none">다운로드</a></div>
+  </div>
+</div>
+
+<footer class="wrap">
+  <strong>SchoolKit</strong> · 학교에서 바로 쓰는 수업 도구<br>
+  문의 <a href="mailto:snackscience@naver.com">snackscience@naver.com</a><br>
+  · ⓒ snackscience. All rights reserved. · v1.0
+</footer>
+
+<script>
+/* ========= 설정 =========
+ * GAS_URL: Google Apps Script 웹앱 주소(선택).
+ *  - 비워 두면: 연수 내용 기반 자동 피드백 + 이미지 저장만 동작
+ *  - 넣으면: Gemini AI 피드백 + 구글 시트로 제출까지 동작 (gas/Code.gs 참고)
+ */
+const CONFIG = { GAS_URL: "" };
+
+const TOPICS = [
+  {id:1,t:"AI 디지털 시대 교사의 역할",d:"가르치는 사람에서 배움을 설계하는 사람으로",
+   key:"AI가 교사를 대신하는 것이 아니라, AI를 활용하며 교사가 해야 할 일의 중심이 달라지고 있습니다.",
+   tips:["AI에게 맡길 일(자료 생성·반복 업무)과 교사가 집중할 일(좋은 질문·학생 이해)을 수업 지도안에 나눠 적어 보세요.","절약한 시간을 학생과의 상호작용·개별 피드백에 쓰도록 계획하면 '배움 설계자'의 역할이 분명해집니다."]},
+  {id:2,t:"교사 주도성과 학생 주도성",d:"자기 목소리 · 선택의 경험 · 주인의식",
+   key:"교사의 주도성은 학생 주도성을 이끄는 힘, 학생의 주도성은 교사의 설계 속에서 자라납니다.",
+   tips:["주제·방법·도구·표현 방법 중 적어도 하나를 학생이 고르도록 열어 두세요.","목표 세우기 → 계획·실천 → 성찰·개선 흐름을 활동지에 넣으면 주인의식이 자랍니다."]},
+  {id:3,t:"연결주의와 학습",d:"주제 중심 융합 · 문제 해결 · 학생 참여형",
+   key:"사실·지식 → 개념적 이해 → 새로운 상황으로의 전이",
+   tips:["생성형 AI에 '이 단원에서 개념 기반 교육과정의 핵심 개념을 추출해줘'라고 물어 핵심 개념을 먼저 잡아 보세요.","배운 개념을 실생활 문제(예: 롤링볼 설계)에 적용·전이하는 과제로 마무리해 보세요."]},
+  {id:4,t:"개인 맞춤형 시대와 학습",d:"진단 → 맞춤 → 피드백 → 성장",
+   key:"AI·디지털 도구의 목적은 '기술 활용'이 아니라 학생 한 명 한 명에게 더 나은 배움의 경험을 제공하는 것입니다.",
+   tips:["AI 교수학습 플랫폼을 쓰더라도 '한 사람이 기록하고 나머지는 함께 논의'처럼 오프라인 상호작용 장면을 꼭 넣어 주세요.","수준·관심·속도·필요 중 무엇에 맞출지 하나를 정해 차별화하면 설계가 쉬워집니다."]},
+  {id:5,t:"데이터 기반 의사결정과 학습",d:"데이터의 끝에는 학생이 있습니다",
+   key:"데이터를 모으는 것이 목적이 아니라, 데이터를 통해 학생을 더 깊이 이해하고 성장을 지원하는 것이 목적입니다.",
+   tips:["형성평가·참여 기록 등 이미 있는 데이터 한 가지를 골라 '다음 차시에 무엇을 바꿀지' 결정하는 데 써 보세요.","AI로 서·논술형 응답을 분석하더라도 최종 피드백 문장은 교사가 확인·수정해 전달하세요."]},
+  {id:6,t:"Human-in-the-Loop (HITL)",d:"사고의 외주화를 막는 교사의 개입",
+   key:"AI는 사고를 돕는 도구, 생각의 주인은 학생입니다.",
+   tips:["AI 사용 중 실시간 모니터링 시점을 정해 두고, 할루시네이션·편향을 함께 점검하세요.","AI가 정답을 바로 줄 때 '원인을 두 가지 이상 추론한 뒤 AI 답과 비교하자'처럼 비계를 다시 높여 주세요.","AI 코스웨어 학습 후에는 Exam-Wrapper 같은 오프라인 성찰 글쓰기를 붙여 보세요."]},
+  {id:7,t:"H-A-H 프레임워크",d:"학생 생각 → AI 확장 → 학생 판단",
+   key:"AI는 조력자입니다. 수업의 주도권은 교사와 학생에게 있습니다.",
+   tips:["'먼저 10분 동안 네 생각을 정리한 다음 AI를 쓰자'처럼 AI 사용 시점을 명시해 주세요.","AI 결과를 그대로 쓰지 않고 '동의하는 부분/다르게 생각하는 부분'을 적게 하세요.","마지막 결정은 학생이 근거를 들어 내리도록 활동을 끝맺어 보세요."]},
+  {id:8,t:"AI 디지털 수업 속 사회정서학습(SEL)",d:"칭찬 · 격려 · 기다려주기 · 갈등 중재",
+   key:"AI는 학생의 마음을 보여줄 수 있지만, 그 마음에 다가가는 것은 교사입니다.",
+   tips:["수업 시작 감정 체크인처럼 짧은 SEL 장면을 디지털 도구로 열어 보세요.","칭찬·격려·다시 기회 주기 같은 교사 말 한마디를 의도적으로 수업 흐름에 넣어 보세요."]}
+];
+
+const LENSES = [
+  {id:"h1",n:"학생 생각으로 시작",kw:["먼저","예측","예상","가설","사전","스스로","자기 생각","자신의 생각","생각을 정리","생각을 적","질문을 만","질문 만들","브레인","떠올"],
+   good:"AI를 쓰기 전에 학생이 먼저 생각하는 단계가 있어 '사고의 외주화'를 막는 출발점이 잘 잡혀 있습니다.",
+   need:"AI를 쓰기 전에 학생이 먼저 예측하거나 자기 생각을 적는 'H(Human)' 단계를 넣어 보세요. 예) '먼저 10분 동안 네 생각을 정리한 다음 AI를 쓰자.'"},
+  {id:"ai",n:"AI로 생각 확장",kw:["ai","인공지능","챗봇","생성형","gpt","제미나이","gemini","뤼튼","캔바","canva","투닝","코스웨어","플랫폼","패들렛","padlet","브리스크","소크룸","디지털","크롬북","태블릿","클로드","claude","노트북lm","notebooklm"],
+   good:"AI·디지털 도구를 활용하는 장면이 분명해 학생의 생각을 넓히는 'A' 단계가 드러납니다.",
+   need:"AI·디지털 도구를 어떤 목적으로 쓰는지(정보 탐색, 다른 관점 요청, 피드백 받기 등) 한 문장으로 명시해 보세요."},
+  {id:"h2",n:"학생 판단으로 완성",kw:["검증","비교","근거","판단","확인","재구성","결정","비판","동의","따져","수정","점검","출처"],
+   good:"AI 결과를 학생이 검증·비교하고 스스로 판단하는 마무리가 있어 '생각의 주인은 학생'이라는 원칙이 살아 있습니다.",
+   need:"AI의 답을 그대로 쓰지 않도록 '근거를 찾아 확인하기', '내 생각과 비교하기', '최종 선택은 근거를 들어 내가 결정하기' 단계를 덧붙여 보세요."},
+  {id:"ag",n:"학생 주도성",kw:["선택","고르","주제를","탐구","목표","계획","발표","표현","주도","스스로","궁금","질문"],
+   good:"학생이 선택하고, 질문하고, 표현하는 기회가 있어 학생 주도성(자기 목소리·선택·주인의식)이 자랄 수 있는 설계입니다.",
+   need:"주제·방법·도구·표현 방법 중 하나라도 학생이 직접 고르게 하면 학생 주도성이 훨씬 커집니다."},
+  {id:"rel",n:"상호작용 · SEL",kw:["모둠","협력","토의","토론","짝","친구","동료","칭찬","격려","공감","감정","관계","상호","함께","기다려","역할"],
+   good:"모둠·짝 활동 등 사람 사이의 상호작용이 있어 AI 활용 속에서도 관계와 정서(SEL)를 챙기는 수업입니다.",
+   need:"AI 활용이 개별 화면 작업으로만 끝나지 않도록 '한 사람이 기록하고 나머지는 함께 논의'처럼 오프라인 상호작용 장면을 넣어 보세요."},
+  {id:"ref",n:"성찰 · 데이터",kw:["성찰","돌아보","되돌아","데이터","진단","형성평가","기록","포트폴리오","자기평가","exam","wrapper","분석","피드백","평가","소감"],
+   good:"성찰이나 데이터 활용 단계가 있어 배움의 과정을 돌아보고 다음 수업으로 이어 갈 수 있습니다.",
+   need:"수업 끝에 짧은 성찰(Exam-Wrapper, 한 줄 소감)이나 형성평가 데이터를 넣어, 다음 차시에 무엇을 바꿀지 판단할 근거를 남겨 보세요."}
+];
+
+const STEP_NAMES = ["기본 정보","인상 깊은","적용 내용","아이디어","AI 피드백"];
+const S = {step:0, a:[null], b:[null], fb:null};
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const T = id => TOPICS.find(x=>x.id===id);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---- storage (best effort) ---- */
+const KEY="sk-reflect-v1";
+function save(){try{localStorage.setItem(KEY,JSON.stringify({school:$("#school").value,name:$("#name").value,grade:$("#grade").value,subject:$("#subject").value,whyA:$("#whyA").value,target:$("#target").value,idea:$("#idea").value,a:S.a,b:S.b}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(!d)return;["school","name","grade","subject","whyA","target","idea"].forEach(k=>{if(d[k])$("#"+k).value=d[k]});if(Array.isArray(d.a))S.a=[d.a[0]??null];if(Array.isArray(d.b))S.b=[d.b[0]??null]}catch(e){}}
+
+/* ---- steps ---- */
+function renderSteps(){
+  $("#steps").innerHTML = STEP_NAMES.map((n,i)=>`<button class="step ${i===4?'last':''} ${i<S.step?'done':''} ${i===S.step?'cur':''}" data-go="${i}" aria-label="${i+1}단계 ${n}"><span class="n">${i<S.step?'✓':i+1}</span><span class="t">${n}</span></button>`).join("");
+  $("#bar").style.width = (S.step/4*100)+"%";
+}
+function go(i){
+  if(i>S.step){ for(let k=S.step;k<i;k++){ if(!validate(k)){ show(k); return; } } }
+  show(i);
+}
+function show(i){
+  S.step=i;
+  $$(".panel").forEach(p=>p.classList.toggle("on",+p.dataset.step===i));
+  renderSteps();
+  if(i===3) renderIdeaHelp();
+  if(i===4) runFeedback();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function validate(k){
+  const set=(id,m)=>{$("#err"+id).textContent=m;return !m};
+  if(k===0){ if(!$("#school").value.trim()) return set(0,"학교명을 입력해 주세요."); if(!$("#name").value.trim()) return set(0,"이름을 입력해 주세요."); if(!$("#grade").value.trim()) return set(0,"담당 학년을 입력해 주세요."); if(!$("#subject").value.trim()) return set(0,"과목을 입력해 주세요."); return set(0,""); }
+  if(k===1){ return set(1, S.a.every(Boolean)?"":"인상 깊은 내용을 한 가지 골라 주세요."); }
+  if(k===2){ return set(2, S.b.every(Boolean)?"":"적용해 보고 싶은 내용을 한 가지 골라 주세요."); }
+  if(k===3){ return set(3, $("#idea").value.trim().length<20?"아이디어를 조금 더 구체적으로(20자 이상) 적어 주세요.":""); }
+  return true;
+}
+
+/* ---- topic pickers ---- */
+function renderPicker(which){
+  const arr = which==="A"?S.a:S.b, vio = which==="B";
+  $("#topics"+which).innerHTML = TOPICS.map(t=>`<button class="topic ${vio?'vio':''} ${arr[0]===t.id?'sel':''}" data-topic="${t.id}" aria-pressed="${arr[0]===t.id}">
+      <span class="num">TOPIC ${t.id}</span>
+      <span><div class="tt">${esc(t.t)}</div><div class="ds">${esc(t.d)}</div></span>
+      <span class="mark">✓</span>
+    </button>`).join("");
+  $$("#topics"+which+" [data-topic]").forEach(el=>el.onclick=()=>{
+    const id=+el.dataset.topic;
+    arr[0] = arr[0]===id ? null : id;
+    $("#err"+(which==="A"?1:2)).textContent="";
+    renderPicker(which); save();
+  });
+}
+
+/* ---- idea helpers ---- */
+const EXAMPLES = {
+ 1:[["수업 준비 · AI에게 맡기기", "수업 전날 생성형 AI로 ○○ 단원 읽기 자료와 기초 문항 10개 초안을 만들고, 우리 반 수준에 맞게 용어와 예시를 직접 고쳐 쓴다. 아낀 시간으로 학생별 질문 카드를 준비한다."], ["도입 · 좋은 질문 만들기", "수업 첫 5분, 교과서 그림 한 장을 보여 주며 \"왜 이런 일이 일어났을까?\"라는 질문 하나만 던지고, 학생들이 예상 답을 포스트잇에 적어 칠판에 붙이게 한다."], ["전개 · 배움 설계하기", "AI가 만든 활동지를 그대로 쓰지 않고, '개념 확인 → 모둠 탐구 → 적용 문제' 3단계로 재구성해 학생이 스스로 답을 찾아가도록 순서를 설계한다."], ["전개 · 학생과 상호작용", "모둠 활동 20분 동안 교사는 화면이 아닌 모둠을 순회하며 \"지금 어디에서 막혔어?\", \"그렇게 생각한 이유는?\" 두 질문으로 학생의 생각을 듣는다."], ["정리 · 학생 이해하기", "AI 퀴즈 결과로 정답률이 낮은 학생 3~4명을 확인한 뒤, 정리 시간에 직접 다가가 어디서 헷갈렸는지 1분씩 대화한다."], ["다음 차시 · 성장 지원", "학생들이 수업 중 남긴 질문을 모아 가장 많이 나온 질문을 다음 차시의 탐구 주제로 삼고, 질문한 학생의 이름을 함께 소개한다."]],
+ 2:[["자기 목소리 · 말하기", "모둠 토의 때 '1인 1분 발언 → 친구 의견에 덧붙이기 → 모둠 결론' 순서를 정해, 평소 말이 적은 학생도 반드시 자기 생각을 한 번 말하게 한다."], ["선택 · 탐구 주제", "○○ 단원에서 교사가 제시한 탐구 주제 3가지(예: 생활 속 사례, 사회 문제, 미래 기술) 중 학생이 하나를 골라 모둠을 구성한다."], ["선택 · 방법과 도구", "같은 탐구 질문에 대해 실험·자료 조사·AI 활용 중 해결 방법을 모둠이 직접 고르고, 활동지에 '이 방법을 고른 이유'를 한 줄로 적게 한다."], ["선택 · 표현 방법", "탐구 결과를 보고서, 카드뉴스, 1분 영상, 캔바 포스터 중 원하는 방식으로 표현하게 하고, 공통 평가 기준(정확성·근거·전달력)만 미리 안내한다."], ["주인의식 · 목표와 성찰", "수업 시작에 '오늘 내가 할 수 있게 될 것'을 한 문장으로 쓰고, 끝날 때 달성 정도를 1~5로 표시한 뒤 다음 차시 목표를 이어서 적게 한다."], ["주인의식 · 어려움 해결", "막히면 바로 손들기 전에 '교과서 다시 보기 → 짝에게 묻기 → AI에게 힌트만 요청하기' 3단계를 먼저 시도하고, 시도한 내용을 기록하게 한다."]],
+ 3:[["개념 추출 · AI 활용", "생성형 AI에 \"중학교 ○학년 ○○ 단원에서 ○○ 활동을 계획 중이야. 개념 기반 교육과정의 핵심 개념을 추출해줘\"라고 요청한 뒤, 교사가 핵심 개념 1개(예: 상호작용)를 골라 단원의 중심 질문으로 삼는다."], ["교과 내 융합", "○○ 단원과 앞서 배운 △△ 단원을 연결해, 두 단원에 공통으로 쓰이는 개념을 학생들이 개념 지도로 그려 보게 한다."], ["교과 간 융합", "○○ 교과 선생님과 협력해 '기후 변화' 같은 공통 주제를 정하고, 우리 교과는 원인 분석, 상대 교과는 해결 캠페인을 맡아 결과물을 함께 발표한다."], ["문제 해결 중심", "역학적 에너지를 배운 뒤 '구슬 세 개가 목표 지점에 도달하는 롤링볼'을 모둠별로 설계·제작하고, 실패한 구간을 에너지 전환으로 설명하며 개선하게 한다."], ["실생활 연계", "우리 학교에서 실제로 겪는 문제(예: 교실 온도, 급식 잔반)를 찾아 배운 개념으로 원인을 분석하고 해결 방안을 제안서로 작성하게 한다."], ["전이 확인", "단원 마무리에 처음 보는 상황 문제를 제시하고, '이 상황에서도 우리가 배운 개념이 적용될까?'를 근거와 함께 설명하는 글을 쓰게 한다."]],
+ 4:[["진단", "수업 시작 5분 동안 AI 교수학습 플랫폼으로 핵심 개념 진단 문항 5개를 풀게 하고, 결과에 따라 학생을 '기본·보충·심화' 과제로 안내한다."], ["수준에 맞게", "같은 학습 목표로 난이도가 다른 과제 3종을 준비하고, 진단 결과를 참고해 학생이 직접 출발 과제를 고른 뒤 다 풀면 다음 단계로 넘어가게 한다."], ["관심에 맞게", "어려운 개념을 학생이 좋아하는 소재(축구, 게임, 아이돌 등)와 연결해 다시 설명해 달라고 AI에게 요청하고, 그 설명이 맞는지 교과서와 대조하게 한다."], ["속도에 맞게", "개념을 이해한 학생은 심화 탐구 질문으로 넘어가고, 어려워하는 학생은 AI에게 '한 단계씩 쉽게 설명해줘'라고 반복 질문하며 자기 속도로 학습한다."], ["즉각 피드백", "플랫폼의 자동 채점 결과를 확인한 뒤, 같은 문항을 틀린 학생들을 모아 교사가 5분 미니 수업을 하고 개별 코멘트를 한 줄씩 덧붙인다."], ["오프라인 상호작용", "AI 플랫폼 활동 중에도 4명이 각자 크롬북을 쓰지 않고, 한 사람이 기록하고 나머지는 함께 논의하게 한다. 발표 때는 크롬북을 덮고 TV 화면과 발표자에 집중하게 한다."]],
+ 5:[["학업 데이터 확인", "형성평가 결과를 AI 교수학습 플랫폼의 학급 대시보드로 확인하고, 정답률이 60% 이하인 문항을 골라 다음 차시 도입 5분에 다시 다룬다."], ["서·논술형 분석", "학생들의 서술형 답안을 개인정보를 지운 뒤 생성형 AI에 넣어 자주 나온 오개념 3가지를 찾고, 그 오개념을 바로잡는 비교 활동을 설계한다."], ["학습 과정 데이터", "과제 제출 기록과 수업 참여 기록을 보고 2주 연속 미제출 학생을 찾아, 꾸중 대신 '어디서 멈췄는지' 짧은 상담을 한다."], ["정서 데이터", "수업 시작 감정 체크인 결과에서 '힘듦'을 고른 학생을 확인하고, 모둠 활동 중 먼저 다가가 상태를 살핀다."], ["피드백 설계", "브리스크티칭 등으로 학생 글에 대한 피드백 초안을 받고, 교사가 학생 특성에 맞게 문장을 고쳐 '잘한 점 1 + 고칠 점 1' 형식으로 전달한다."], ["학생과 데이터 공유", "학생이 자기 형성평가 결과 그래프를 보고 '가장 약한 부분'과 '다음 시간 목표'를 스스로 적게 해 데이터를 성장의 근거로 쓰게 한다."]],
+ 6:[["생각 먼저 기록", "AI를 켜기 전, 활동지 첫 칸에 '내 생각'과 '그렇게 생각한 이유'를 3분 동안 먼저 적게 하고, 이 칸이 비어 있으면 AI를 사용하지 않도록 약속한다."], ["실시간 모니터링", "소크룸 등 모니터링 도구로 학생들의 AI 대화를 실시간으로 보다가, 할루시네이션이나 편향된 답이 보이면 화면을 멈추고 전체가 함께 확인한다."], ["사실 확인 활동", "AI 답변을 출력하거나 붙여 넣은 뒤 '확인이 필요한 문장'에 밑줄을 긋고, 교과서·신뢰할 수 있는 자료로 맞는지 표시하게 한다."], ["비계 높이 재조정", "학생이 \"구슬이 왜 끝까지 못 가?\"라고 묻고 AI가 바로 해결책을 주면, \"AI 답을 바로 쓰지 말고 구슬이 가장 느려지는 구간을 관찰해서 원인을 두 가지 이상 추론한 뒤 AI 답과 비교해 보자\"라고 다시 묻는다."], ["오프라인 성찰 글쓰기", "AI 코스웨어로 학습한 뒤 평가 성찰표(Exam-Wrapper)에 '틀린 이유', '다음에 바꿀 공부 방법'을 손글씨로 작성하게 한다."], ["코칭 대화", "작성한 성찰표를 바탕으로 학생과 2~3분 코칭 대화를 하며, 알고리즘이 추천한 학습 경로를 그대로 따를지 스스로 조정할지 함께 정한다."]],
+ 7:[["H · 생각으로 시작", "\"AI 써도 돼요?\"라는 질문에 \"아직은 안 돼. 먼저 10분 동안 네 생각을 정리하자\"라고 답하고, 학생이 예측과 해결 방법을 활동지에 먼저 적게 한다."], ["A · 질문 바꾸기", "AI에게 정답을 묻는 대신 \"내가 생각한 답은 ○○인데, 맞는지 확인할 수 있는 질문 3개를 만들어줘\"처럼 내 생각을 점검하는 질문을 하게 한다."], ["A · 관점 확장", "아이디어가 막히면 지금까지의 내 아이디어를 AI에게 먼저 설명하고 \"다른 관점 두 가지를 제안해줘\"라고 요청해, 새 아이디어를 내 아이디어 옆에 덧붙이게 한다."], ["H · 동의와 반론", "AI 답을 받은 뒤 '동의하는 부분 / 다르게 생각하는 부분 / 그 이유' 3칸 표를 채우게 해, AI 답을 그대로 옮겨 쓰지 않도록 한다."], ["H · 근거로 검증", "AI가 알려준 내용 중 핵심 주장 하나를 골라 교과서나 신뢰할 수 있는 자료에서 근거를 찾아 출처와 함께 적게 한다."], ["H · 최종 결정", "AI가 A안이 더 좋다고 해도, 모둠이 A·B안을 비교해 근거를 들어 최종안을 직접 결정하고 '우리가 이렇게 결정한 이유'를 발표하게 한다."]],
+ 8:[["감정 체크인", "수업 시작 2분, 패들렛이나 멘티미터로 오늘의 감정을 이모지로 체크인하고, 교사가 결과를 보며 \"오늘 피곤한 친구가 많네, 천천히 시작해 보자\"라고 반응한다."], ["격려하기", "\"저 이거 못 하겠어요\"라는 학생에게 \"일단 한번 해 봐. 틀려도 괜찮아\"라고 말하고, 첫 문제를 함께 시작해 준 뒤 다시 혼자 해 보게 한다."], ["기다려주기", "발표나 답을 망설이는 학생에게 바로 다른 학생을 지목하지 않고 \"조금 더 기다려 줄게\"라고 말하며 10초 이상 생각할 시간을 준다."], ["친구 의견 듣기", "자기 방법만 맞다고 하는 학생에게 \"그럼 다른 친구 생각도 한번 들어 보자\"라고 하며, 친구 의견을 요약한 뒤 자기 의견을 말하는 '듣고 말하기' 규칙을 적용한다."], ["모둠 역할 나누기", "AI 활용 모둠 활동에서 '질문자·기록자·검증자·발표자' 역할을 정해, 한 사람만 화면을 붙잡지 않고 모두가 한 가지씩 맡아 참여하게 한다."], ["참여 인정하기", "수업 끝 3분, \"오늘 ○○가 질문을 많이 해서 우리 모두 더 생각해 볼 수 있었어\"처럼 친구의 참여를 인정하는 한마디를 교사와 학생이 함께 나눈다."]]
+};
+function exCard(tx,lb){ return `<button type="button" class="ex" data-ex="${esc(tx)}"><span class="rd">✓</span><span><div class="lb">${esc(lb)}</div><div class="tx">${esc(tx)}</div></span></button>`; }
+function renderIdeaHelp(){
+  const b=S.b[0], a=S.a[0], tb=T(b);
+  $("#ideaSub").textContent = `'${tb.t}'을(를) 어떤 수업에서, 어떻게 적용할지 구체적으로 적어 주세요.`;
+  $("#exTitle").innerHTML = `<span>TOPIC ${b}</span>${esc(tb.t)} 수업 적용 예시`;
+  $("#exList").innerHTML = EXAMPLES[b].map(([lb,tx])=>exCard(tx,lb)).join("");
+  $("#keyTip").innerHTML = `<b>TOPIC ${b} 핵심 메시지</b>${esc(tb.key)}`;
+  $$("#panelIdea .ex, section[data-step='3'] .ex").forEach(c=>c.onclick=()=>{
+    const ta=$("#idea"), tx=c.dataset.ex;
+    const lines = ta.value.split("\n");
+    if(ta.value.includes(tx)) ta.value = lines.filter(l=>l.trim()!==tx).join("\n").replace(/^\n+|\n+$/g,"");
+    else ta.value = (ta.value.trim()? ta.value.replace(/\s*$/,"")+"\n":"") + tx;
+    updCnt(); syncEx(); save(); $("#err3").textContent="";
+  });
+  syncEx();
+}
+function syncEx(){ const v=$("#idea").value; $$("section[data-step='3'] .ex").forEach(c=>c.classList.toggle("on", v.includes(c.dataset.ex))); }
+function updCnt(){ $("#cnt").textContent=$("#idea").value.length; }
+
+/* ---- feedback ---- */
+const PRAISE = {
+  h1:"학생이 먼저 생각하고 시작하도록 한 설계에서 '생각의 주인은 학생'이라는 마음이 느껴져요.",
+  ai:"AI를 수업의 조력자로 자연스럽게 녹여 내신 점이 인상적이에요.",
+  h2:"학생이 근거를 바탕으로 스스로 판단하게 한 장면이 특히 좋아요.",
+  ag:"학생에게 선택과 목소리를 돌려주려는 시도가 학생 주도성을 쑥쑥 키울 거예요.",
+  rel:"친구와 함께 배우는 장면을 살려, AI 시대에도 관계를 놓치지 않으셨네요.",
+  ref:"배움을 돌아보는 시간을 챙기신 덕분에 다음 수업이 더 단단해질 거예요."
+};
+function classLabel(){ return [$("#grade").value.trim(),$("#subject").value.trim()].filter(Boolean).join(" "); }
+function fullTarget(){ return [classLabel(),$("#target").value.trim()].filter(Boolean).join(" · "); }
+function localFeedback(){
+  const raw = $("#idea").value, idea = (raw+" "+$("#target").value).toLowerCase();
+  const name = $("#name").value.trim(), target = fullTarget();
+  const b = S.b[0], a = S.a[0], tb = T(b);
+  const hits = LENSES.filter(l=>l.kw.some(k=>idea.includes(k.toLowerCase()))).map(l=>PRAISE[l.id]);
+  const praise = hits.length ? hits.slice(0,2).join(" ") : "새로운 시도를 수업에 담아 보려는 마음 자체가 가장 큰 출발점이에요.";
+  const cheer = `${name} 선생님, '${tb.t}'을(를) ${target?target+" 수업":"선생님의 수업"}에 담아 보려는 아이디어가 정말 멋져요! ${praise} 연수에서 나눈 "${tb.key}"라는 말처럼, 선생님의 교실에서 학생들이 한 뼘 더 자라날 거예요. 첫 시도를 진심으로 응원합니다!`;
+  const fresh = id => EXAMPLES[id].filter(([,tx])=>!raw.includes(tx));
+  const ideas = [];
+  fresh(b).slice(0, a&&a!==b?2:3).forEach(([lb,tx])=>ideas.push({lb:`TOPIC ${b} · ${lb}`,tx}));
+  if(a && a!==b){ const f=fresh(a); if(f[0]) ideas.push({lb:`인상 깊었던 TOPIC ${a}와 연결 · ${f[0][0]}`,tx:f[0][1]}); }
+  return {mode:"연수 내용 기반", cheer, ideas};
+}
+
+async function remoteFeedback(){
+  const payload = {action:"feedback", school:$("#school").value, name:$("#name").value,
+    impressive:S.a.map(id=>T(id).t), why:$("#whyA").value, apply:S.b.map(id=>T(id).t),
+    grade:$("#grade").value, subject:$("#subject").value, target:$("#target").value, idea:$("#idea").value};
+  const ctl = new AbortController(); const to=setTimeout(()=>ctl.abort(),25000);
+  const r = await fetch(CONFIG.GAS_URL,{method:"POST",body:JSON.stringify(payload),headers:{"Content-Type":"text/plain;charset=utf-8"},signal:ctl.signal});
+  clearTimeout(to);
+  const j = await r.json();
+  if(!j || !j.ok || !j.feedback || !j.feedback.cheer) throw new Error(j&&j.error||"no feedback");
+  const f = j.feedback;
+  return {mode:"Gemini AI", cheer:f.cheer, ideas:(f.ideas||[]).map(x=>typeof x==="string"?{lb:"새로운 아이디어",tx:x}:{lb:x.label||"새로운 아이디어",tx:x.text||""})};
+}
+
+let fbKey="";
+async function runFeedback(){
+  const key = JSON.stringify([S.a,S.b,$("#idea").value,$("#target").value,$("#whyA").value,classLabel(),$("#name").value]);
+  fillSheet();
+  if(S.fb && key===fbKey){ renderFeedback(S.fb); return; }
+  fbKey=key; S.fb=null;
+  $("#mode").textContent="분석 중";
+  $("#fbBody").innerHTML=`<div class="loading"><div class="dots"><i></i><i></i><i></i></div>선생님의 아이디어를 연수 내용과 연결해 읽고 있어요…</div>`;
+  $("#shFb").textContent="피드백을 만드는 중…";
+  let fb;
+  try{
+    if(CONFIG.GAS_URL) fb = await remoteFeedback();
+    else { await new Promise(r=>setTimeout(r,1100)); fb = localFeedback(); }
+  }catch(e){ fb = localFeedback(); }
+  if(fbKey!==key) return;
+  S.fb=fb; renderFeedback(fb);
+}
+function renderFeedback(f){
+  $("#mode").textContent=f.mode;
+  $("#fbBody").innerHTML = `
+    <div class="fb-sec"><h4><em class="e1">💌</em>응원 한마디 <span class="withai">with AI</span></h4><div class="cheer">${esc(f.cheer)}</div></div>
+    <div class="fb-sec"><h4><em class="e2">💡</em>이런 아이디어도 더해 보세요</h4>
+      <div class="idea-list">${f.ideas.map((x,i)=>`<div class="idea-it"><span class="no">${i+1}</span><div><div class="lb">${esc(x.lb)}</div><div class="tx">${esc(x.tx)}</div></div></div>`).join("")}</div></div>`;
+  $("#shFb").innerHTML = `<p>${esc(f.cheer)}</p>${f.ideas.length?`<p class="sh-ideas"><b>새로운 아이디어</b></p><ul class="sh-ul">${f.ideas.slice(0,2).map(x=>`<li>${esc(x.tx)}</li>`).join("")}</ul>`:""}`;
+}
+function fillSheet(){
+  $("#shWho").textContent = [$("#school").value.trim(), classLabel(), $("#name").value.trim()+" 선생님"].filter(Boolean).join(" · ");
+  const pills = (arr,why)=>arr.filter(Boolean).map((id,i)=>`<div class="pill"><span class="no">TOPIC ${id}</span>${esc(T(id).t)}${i===0&&why?`<small>${esc(why)}</small>`:""}</div>`).join("");
+  $("#shA").innerHTML = pills(S.a,$("#whyA").value.trim());
+  $("#shB").innerHTML = pills(S.b,"");
+  $("#shIdea").textContent = $("#idea").value.trim();
+  $("#shTarget").textContent = $("#target").value.trim()?`· ${$("#target").value.trim()}`:"";
+  const d=new Date(); $("#shDate").textContent=`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`;
+}
+
+/* ---- image save / submit ---- */
+async function capture(){
+  if(!window.html2canvas) throw new Error("이미지 모듈을 불러오지 못했어요. 네트워크를 확인해 주세요.");
+  const el=$("#sheet");
+  const canvas = await html2canvas(el,{scale:Math.min(3,Math.max(2,window.devicePixelRatio||2)),backgroundColor:"#ffffff",useCORS:true,windowWidth:Math.max(560,el.scrollWidth)});
+  return canvas.toDataURL("image/png");
+}
+function fileName(){ return `오늘의배움한장_${$("#school").value.trim()}_${$("#name").value.trim()}.png`.replace(/[\\/:*?"<>|\s]+/g,"_"); }
+function download(url){
+  const a=document.createElement("a"); a.href=url; a.download=fileName(); document.body.appendChild(a); a.click(); a.remove();
+}
+function openModal(url){ $("#modalImg").src=url; $("#dlLink").href=url; $("#dlLink").download=fileName(); $("#modal").classList.add("on"); }
+const inApp = /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(navigator.userAgent);
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+async function saveImage(btn){
+  if(!S.fb){ status("피드백이 완성된 뒤에 저장할 수 있어요."); return null; }
+  btn.disabled=true; status("이미지를 만드는 중…");
+  try{
+    const url = await capture();
+    if(isMobile||inApp) openModal(url); else download(url);
+    status("✅ 이미지가 저장되었습니다.");
+    return url;
+  }catch(e){ status("⚠️ "+e.message); return null; }
+  finally{ btn.disabled=false; }
+}
+async function submit(btn){
+  const url = await saveImage(btn);
+  if(!url) return;
+  if(CONFIG.GAS_URL){
+  $("#privacy").innerHTML='<span class="ic">🔒</span><div><b>제출한 내용은 연수 진행자에게만 전달돼요.</b>제출 버튼을 누르면 학교명·이름·작성 내용과 이미지가 연수 진행자의 구글 시트·드라이브에 저장되며, 응원 한마디 작성을 위해 아이디어가 Google AI(Gemini)에 전달됩니다. 작성 중인 내용은 지금 쓰는 기기에만 임시로 남습니다.</div>';
+}
+if(!CONFIG.GAS_URL){ status("✅ 이미지 저장 완료! 연수 안내에 따라 저장한 이미지를 패들렛 등에 올려 제출해 주세요."); return; }
+  btn.disabled=true; status("제출하는 중…");
+  try{
+    const r = await fetch(CONFIG.GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
+      action:"submit", school:$("#school").value.trim(), name:$("#name").value.trim(),
+      impressive:S.a.map(id=>T(id).t), why:$("#whyA").value.trim(), apply:S.b.map(id=>T(id).t),
+      grade:$("#grade").value.trim(), subject:$("#subject").value.trim(), target:$("#target").value.trim(), idea:$("#idea").value.trim(),
+      feedback:["[응원] "+S.fb.cheer,...S.fb.ideas.map(x=>"[아이디어] "+x.tx)].join("\n"),
+      image:url })});
+    const j = await r.json();
+    status(j.ok?"🎉 제출 완료! 이미지도 함께 저장되었습니다.":"⚠️ 제출 실패: "+(j.error||"다시 시도해 주세요."));
+  }catch(e){ status("⚠️ 제출 중 오류가 났어요. 저장된 이미지를 따로 제출해 주세요."); }
+  finally{ btn.disabled=false; }
+}
+function status(m){ $("#status").textContent=m; }
+
+/* ---- wire up ---- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-next],[data-prev],[data-go]"); if(!t) return;
+  if(t.hasAttribute("data-next")) go(S.step+1);
+  else if(t.hasAttribute("data-prev")) show(S.step-1);
+  else go(+t.dataset.go);
+});
+["school","name","grade","subject","whyA","target","idea"].forEach(id=>$("#"+id).addEventListener("input",()=>{save(); if(id==="idea"){ updCnt(); syncEx(); }}));
+const ORDER1=["school","name","grade","subject"];
+ORDER1.forEach((id,i)=>$("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); i<ORDER1.length-1?$("#"+ORDER1[i+1]).focus():go(1);} }));
+$("#saveBtn").onclick=e=>saveImage(e.currentTarget);
+$("#submitBtn").onclick=e=>submit(e.currentTarget);
+$("#closeModal").onclick=()=>$("#modal").classList.remove("on");
+$("#modal").onclick=e=>{ if(e.target.id==="modal") $("#modal").classList.remove("on"); };
+$("#resetBtn").onclick=()=>{
+  if(!confirm("작성한 내용을 모두 지우고 처음부터 다시 작성할까요?")) return;
+  try{localStorage.removeItem(KEY)}catch(e){}
+  ["school","name","grade","subject","whyA","target","idea"].forEach(id=>$("#"+id).value="");
+  S.a=[null]; S.b=[null]; S.fb=null; fbKey=""; status("");
+  renderPicker("A"); renderPicker("B"); updCnt(); show(0);
+};
+if(!CONFIG.GAS_URL){
+  $("#submitBtn").style.display="none";
+  $("#saveBtn").innerHTML="📥 이미지 저장 · 제출";
+  $("#saveBtn").onclick=e=>submit(e.currentTarget);
+  document.querySelector(".actions").style.gridTemplateColumns="1fr";
+}
+
+load(); renderPicker("A"); renderPicker("B"); updCnt(); renderSteps();
+</script>
+</body>
+</html>
