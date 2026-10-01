@@ -340,7 +340,7 @@ footer a{color:var(--blue);text-decoration:none}
  *  - 비워 두면: 연수 내용 기반 자동 피드백 + 이미지 저장만 동작
  *  - 넣으면: Gemini AI 피드백 + 구글 시트로 제출까지 동작 (gas/Code.gs 참고)
  */
-const CONFIG = { GAS_URL: "" };
+const CONFIG = { GAS_URL: "https://script.google.com/macros/s/AKfycbwem8YopYWKccSqlyvSO827-mSaPS00coOhbH9IbhVo7kQDyppnfSYK3UdJbkw66n3U/exec" };
 
 const TOPICS = [
   {id:1,t:"AI 디지털 시대 교사의 역할",d:"가르치는 사람에서 배움을 설계하는 사람으로",
@@ -503,7 +503,7 @@ async function remoteFeedback(){
   const payload = {action:"feedback", school:$("#school").value, name:$("#name").value,
     impressive:S.a.map(id=>T(id).t), why:$("#whyA").value, apply:S.b.map(id=>T(id).t),
     grade:$("#grade").value, subject:$("#subject").value, target:$("#target").value, idea:$("#idea").value};
-  const ctl = new AbortController(); const to=setTimeout(()=>ctl.abort(),25000);
+  const ctl = new AbortController(); const to=setTimeout(()=>ctl.abort(),50000);
   const r = await fetch(CONFIG.GAS_URL,{method:"POST",body:JSON.stringify(payload),headers:{"Content-Type":"text/plain;charset=utf-8"},signal:ctl.signal});
   clearTimeout(to);
   const j = await r.json();
@@ -616,12 +616,10 @@ $("#resetBtn").onclick=()=>{
   S.a=[null]; S.b=[null]; S.fb=null; fbKey=""; status("");
   renderPicker("A"); renderPicker("B"); updCnt(); show(0);
 };
-if(!CONFIG.GAS_URL){
-  $("#submitBtn").style.display="none";
-  $("#saveBtn").innerHTML="📥 이미지 저장 · 제출";
-  $("#saveBtn").onclick=e=>submit(e.currentTarget);
-  document.querySelector(".actions").style.gridTemplateColumns="1fr";
-}
+$("#submitBtn").style.display="none";
+$("#saveBtn").innerHTML="📥 이미지 저장 · 제출";
+$("#saveBtn").onclick=e=>submit(e.currentTarget);
+document.querySelector(".actions").style.gridTemplateColumns="1fr";
 
 load(); renderPicker("A"); renderPicker("B"); updCnt(); renderSteps();
 </script>
